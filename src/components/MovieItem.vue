@@ -5,6 +5,12 @@ export default {
     props: {
         movie: Object,
     },
+    
+    data(){
+        return{
+        }
+    },
+
     methods:{
     getFlag(){
         return `https://flagcdn.com/16x12/${this.movie.original_language}.png`
@@ -14,8 +20,15 @@ export default {
         return `https://image.tmdb.org/t/p/w342/${this.movie.poster_path}.jpg`
     },
 
-    getStarsVote(){
-       return Math.round(this.movie.vote_average / 2)
+    printStars(){
+        const vote= Math.round(this.movie.vote_average / 2);
+        const arrayStars = ['fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star'];
+        for(let i = 0; i < vote; i++){
+            arrayStars.pop();
+            arrayStars.unshift('fa-solid fa-star');
+            console.log(arrayStars)
+        }
+        return arrayStars;
     }
 }
 }
@@ -30,7 +43,7 @@ export default {
         <div>
             <img :src="getFlag()" class="">
         </div>
-        <p class="">{{ getStarsVote() }}</p>
+        <i v-for="star in printStars()" :class="star"></i>
     </div>
 </div>
 
