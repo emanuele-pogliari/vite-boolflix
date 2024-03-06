@@ -35,16 +35,22 @@ axios.get('https://api.themoviedb.org/3/search/movie?api_key=19c45db332e486b3ce1
     console.log(this.store.searchValue);
     this.store.movies = res.data.results;
   });
-  },
+
+  axios.get('https://api.themoviedb.org/3/search/tv?api_key=19c45db332e486b3ce135dc6b088eb7e&query=' + this.store.searchValue)
+  .then(res => {
+    console.log(res.data.results)
+    console.log(this.store.searchValue);
+    this.store.series = res.data.results;
+  });
 },
 
-
+}
 }
 
 </script>
 
 <template>
-  <AppNav @click="searchMovies()"></AppNav>
+  <AppNav @search="searchMovies()"></AppNav>
   <AppMain></AppMain>
 
 </template>
