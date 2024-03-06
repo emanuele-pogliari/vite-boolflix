@@ -1,12 +1,32 @@
 <script>
+import { store } from "../store.js";
+import axios from "axios";
+
 export default {
     name: 'AppNav',
+
+    data(){
+      return{
+        store,
+      }
+    },
 }
+
 </script>
 
-<template>    
-NAVBAR   
+<template>   
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">Navbar</a>
+    <div class="d-flex" role="search">
+      <input v-model="store.searchValue" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button @click="$emit('search')" class="btn btn-outline-success" type="submit">Search</button>
+    </div>
+  </div>
+</nav>
+    
 </template>
 
 <style lang="scss">
+
 </style>
