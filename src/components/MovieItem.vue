@@ -12,6 +12,10 @@ export default {
 
     getPoster(){
         return `https://image.tmdb.org/t/p/w342/${this.movie.poster_path}.jpg`
+    },
+
+    getStarsVote(){
+       return Math.round(this.movie.vote_average / 2)
     }
 }
 }
@@ -26,7 +30,7 @@ export default {
         <div>
             <img :src="getFlag()" class="">
         </div>
-        <p class="">{{ movie.vote_average }}</p>
+        <p class="">{{ getStarsVote() }}</p>
     </div>
 </div>
 
