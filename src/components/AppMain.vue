@@ -24,9 +24,13 @@ export default{
 <template>    
 <div class="container">
     <div>MOVIES</div>
-    <MovieItem v-for="currentMovie in store.movies" :movie="currentMovie"></MovieItem>
+    <div class="row gap-5 ">
+        <MovieItem  v-for="currentMovie in store.movies" :movie="currentMovie"></MovieItem>
+    </div>
     <div>SERIES</div>
+    <div class="row">
     <SeriesItem v-for="currentSerie in store.series" :series="currentSerie"></SeriesItem>
+</div>
 </div>   
 </template>
 
