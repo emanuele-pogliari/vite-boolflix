@@ -3,7 +3,7 @@ export default {
     name: 'MovieItem',
 
     props: {
-        movie: Object,
+        item: Object,
     },
     
     data(){
@@ -13,8 +13,8 @@ export default {
 
     methods:{
     getFlag(){
-        let flag = this.movie.original_language;
-        switch(this.movie.original_language){
+        let flag = this.item.original_language;
+        switch(this.item.original_language){
             case "ja":
                 flag = "jp";
                 break;
@@ -48,11 +48,11 @@ export default {
     },
 
     getPoster(){
-        return `https://image.tmdb.org/t/p/w342/${this.movie.poster_path}`
+        return `https://image.tmdb.org/t/p/w342/${this.item.poster_path}`
     },
 
     printStars(){
-        const vote = Math.round(this.movie.vote_average / 2);
+        const vote = Math.round(this.item.vote_average / 2);
         const arrayStars = ['fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star'];
         for(let i = 0; i < vote; i++){
             arrayStars.pop();
@@ -66,26 +66,17 @@ export default {
 </script>
 
 <template>
-        <div class="card col-12 col-md-6 col-lg-3 p-0 flip-card border-1 border-color rounded-0 my-card">
-            <div class="flip-card-inner">
-                
-                <div class="flip-card-front">
+        <div class="card col-6 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 my-card">
+            <div class="flip-card-front">
                     <img class="my_img" :src="getPoster()" alt="">
+            </div>
+            <div class="flip-card-back">
+                <p>{{ item.title ? item.title : item.name }}</p>
+                <p>{{ item.original_title ? item.original_title : item.original_name }}</p>
+                <div>
+                    <img :src="getFlag()" class="">
                 </div>
-
-                <div class="flip-card-back">
-
-                    <p>{{ movie.title }}</p>
-                    <p class="">{{ movie.original_name }}</p>
-
-                    <div>
-                        <img :src="getFlag()" class="">
-                    </div>
-
                     <i v-for="star in printStars()" :class="star"></i>
-
-                </div>
-
             </div>
         </div>
 

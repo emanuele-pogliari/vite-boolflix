@@ -1,6 +1,5 @@
 <script>
-import SeriesItem from "./SeriesItem.vue";
-import MovieItem from "./MovieItem.vue";
+import AppCard from "./AppCard.vue";
 
 import {store} from "../store.js"
 
@@ -8,8 +7,7 @@ export default{
     name: 'AppMain',
 
     components:{
-        MovieItem,
-        SeriesItem,
+        AppCard,
     },
 
     data() {
@@ -23,16 +21,13 @@ export default{
 
 <template>    
 <div class="container">
-    <div>MOVIES</div>
     <div class="row">
-        <MovieItem  v-for="currentMovie in store.movies" :movie="currentMovie"></MovieItem>
+        <AppCard  v-for="currentMovie in store.movies" :item="currentMovie"></AppCard>
+        <AppCard  v-for="currentSerie in store.series" :item="currentSerie"></AppCard>
     </div>
-    <div>SERIES</div>
-    <div class="row">
-    <SeriesItem v-for="currentSerie in store.series" :series="currentSerie"></SeriesItem>
 </div>
-</div>   
+   
 </template>
 
 <style lang="scss">
-</style>
+</style>./AppCard.vue/index.js
