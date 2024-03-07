@@ -6,6 +6,8 @@ export const store = reactive({
 
     searchValue: "",
 
+    flag: "",
+
     series: [],
 
 });

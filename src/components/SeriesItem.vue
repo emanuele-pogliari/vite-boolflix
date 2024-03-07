@@ -12,7 +12,7 @@ export default {
     },
 
     getPoster(){
-        return `https://image.tmdb.org/t/p/w342/${this.series.poster_path}`
+        return `https://image.tmdb.org/t/p/w342/${series.poster_path}`
     }
 }
 }
