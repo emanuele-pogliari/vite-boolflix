@@ -24,7 +24,7 @@ export default{
 <template>    
 <div class="container">
     <div>MOVIES</div>
-    <div class="row gap-5 ">
+    <div class="row">
         <MovieItem  v-for="currentMovie in store.movies" :movie="currentMovie"></MovieItem>
     </div>
     <div>SERIES</div>

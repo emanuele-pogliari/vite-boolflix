@@ -13,7 +13,38 @@ export default {
 
     methods:{
     getFlag(){
-        return `https://flagcdn.com/16x12/${this.movie.original_language}.png`
+        let flag = this.movie.original_language;
+        switch(this.movie.original_language){
+            case "ja":
+                flag = "jp";
+                break;
+            case "en":
+                flag = "us";
+                break;
+            case "ko":
+                flag = "kr";
+                break;
+            case "da":
+                flag = "dk";
+                break;
+            case "zh":
+                flag = "cn";
+                break;
+            case "cs":
+                flag = "cz"
+                break;
+            case "uk":
+                flag = "gb"
+                break;
+            case "hi":
+                flag = "in"
+                break;
+            case "sv":
+                flag = "se"
+                break;
+            default:
+        }
+        return `https://flagcdn.com/16x12/${flag}.png`
     },
 
     getPoster(){
@@ -35,7 +66,7 @@ export default {
 </script>
 
 <template>
-        <div class="card col-12 col-md-6 col-lg-3 p-0 flip-card border-0 rounded-0">
+        <div class="card col-12 col-md-6 col-lg-3 p-0 flip-card border-1 border-color rounded-0 my-card">
             <div class="flip-card-inner">
                 
                 <div class="flip-card-front">
@@ -66,6 +97,11 @@ export default {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1.5;
+  }
+
+  .my-card{
+    background-color: transparent;
+    color:white;
   }
 
 </style>
