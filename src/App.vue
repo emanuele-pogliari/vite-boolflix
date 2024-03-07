@@ -23,6 +23,26 @@ export default {
       this.store.movies = res.data.results;
       console.log(res.data.results);
     });
+
+    const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOWM0NWRiMzMyZTQ4NmIzY2UxMzVkYzZiMDg4ZWI3ZSIsInN1YiI6IjYwYTBlNWE4ZTE4ZTNmMDA1OGRlZDE5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Qhi4cyNjuuzbIBkmg7c5TKybAN_pLBz6GDbISxPNnQ8'
+  }
+};
+
+axios.get('https://api.themoviedb.org/3/movie/196/credits', options)
+  .then(res => {
+    
+  }).catch(err => console.error(err));
+
+  axios('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
+
   },
 
 methods:{
