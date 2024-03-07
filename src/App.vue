@@ -52,11 +52,7 @@ axios.get('https://api.themoviedb.org/3/search/movie?api_key=19c45db332e486b3ce1
 <template>
   <AppNav @search="searchMovies()"></AppNav>
   <AppMain></AppMain>
-
 </template>
 
 <style>
-
-
-
 </style>
