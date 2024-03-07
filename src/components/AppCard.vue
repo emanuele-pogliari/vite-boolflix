@@ -66,11 +66,11 @@ export default {
 </script>
 
 <template>
-        <div class="card col-6 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 my-card">
-            <div class="flip-card-front">
+        <div class="card col-6 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
+            <div class="img-box">
                     <img class="my_img" :src="getPoster()" alt="">
             </div>
-            <div class="flip-card-back">
+            <div class="overlay">
                 <p>{{ item.title ? item.title : item.name }}</p>
                 <p>{{ item.original_title ? item.original_title : item.original_name }}</p>
                 <div>
@@ -94,5 +94,23 @@ export default {
     background-color: transparent;
     color:white;
   }
+
+  .overlay {
+  position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.7); /* Black see-through */
+  width: 100%;
+  height: 100%;
+  transition: .3s ease;
+  opacity:0;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.my-card:hover .overlay {
+  opacity: 1;
+}
 
 </style>
