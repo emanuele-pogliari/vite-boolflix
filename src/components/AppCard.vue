@@ -70,10 +70,11 @@ export default {
         return arrayStars;
     },
 
-    getId(id){
+
+    getCastsName(id){
     axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=19c45db332e486b3ce135dc6b088eb7e`).then(res => {
     store.casts = res.data.cast;
-    console.log(store.casts);
+    store.casts.splice(5,store.casts.length)
     })
         },
     }   
@@ -82,7 +83,7 @@ export default {
 </script>
 
 <template>
-        <div @click=getId(item.id) class="card col-12 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
+        <div @click=getCastsName(item.id) class="card col-12 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
             <div class="img-box">
                 <img class="my_img" :src="getPoster()" alt="">
             </div>
@@ -99,6 +100,7 @@ export default {
                 </div>
 
                 <p max-length="50" class="truncate-text">{{ item.overview }}</p>
+                <div><span v-for="singleName in store.casts">{{ singleName.name }}, </span></div>
             </div>
         </div>
 </template>
