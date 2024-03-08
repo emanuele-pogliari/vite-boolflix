@@ -1,4 +1,7 @@
 <script>
+import axios from 'axios';
+import {store} from "../../src/store.js"
+
 export default {
     name: 'MovieItem',
 
@@ -8,6 +11,7 @@ export default {
     
     data(){
         return{
+            store,
         }
     },
 
@@ -64,13 +68,21 @@ export default {
             console.log(arrayStars)
         }
         return arrayStars;
-    }
+    },
+
+    getId(id){
+    axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=19c45db332e486b3ce135dc6b088eb7e`).then(res => {
+    store.casts = res.data.cast;
+    console.log(store.casts);
+    })
+        },
+    }   
 }
-}
+
 </script>
 
 <template>
-        <div class="card col-12 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
+        <div @click=getId(item.id) class="card col-12 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
             <div class="img-box">
                 <img class="my_img" :src="getPoster()" alt="">
             </div>
