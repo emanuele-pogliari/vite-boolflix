@@ -20,16 +20,18 @@ export default{
 </script>
 
 <template>    
+
 <div class="container">
+
     <div class="row">
         
-        <div class="text-white" v-if="store.movies.length!= 0">Movies</div>
+        <div class="text-white fs-2 mb-3" v-if="store.movies.length!= 0">Movies</div>
 
-        <AppCard  v-for="currentMovie in store.movies" :item="currentMovie"></AppCard>
+        <AppCard class="mb-4" v-for="currentMovie in store.movies" :item="currentMovie"></AppCard>
 
-        <div class="text-white" v-if="store.series.length!= 0">Series</div>
+        <div class="text-white fs-2 mb-3" v-if="store.series.length!= 0">Series</div>
 
-        <AppCard  v-for="currentSerie in store.series" :item="currentSerie"></AppCard>
+        <AppCard class="mb-2" v-for="currentSerie in store.series" :item="currentSerie"></AppCard>
 
     </div>
 </div>
@@ -37,4 +39,4 @@ export default{
 </template>
 
 <style lang="scss">
-</style>./AppCard.vue/index.js
+</style>
