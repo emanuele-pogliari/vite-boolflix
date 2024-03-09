@@ -65,16 +65,35 @@ export default {
         for(let i = 0; i < vote; i++){
             arrayStars.pop();
             arrayStars.unshift('fa-solid fa-star');
-            console.log(arrayStars)
         }
         return arrayStars;
     },
 
-
+    // methods that will extract casts names from api
     getCastsName(id){
     axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=19c45db332e486b3ce135dc6b088eb7e`).then(res => {
     store.casts = res.data.cast;
-    store.casts.splice(5,store.casts.length)
+    store.casts.splice(5,store.casts.length);
+
+    // test for genres
+    const arrUnited = [];
+    const array = store.movies.concat(store.series);
+    array.forEach(element => {
+        
+        arrUnited.push(element.genre_ids)
+    });
+
+    const allGenres = [];
+    arrUnited.forEach(element => {
+        for(let i = 0; i < element.length; i++){
+            if(!allGenres.includes(element[i]))
+            allGenres.push(element[i])
+        }
+    });
+    
+    console.log(allGenres)
+    
+        
     })
         },
     }   
@@ -83,6 +102,7 @@ export default {
 </script>
 
 <template>
+    
         <div @click=getCastsName(item.id) class="card col-12 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
             <div class="img-box">
                 <img class="my_img" :src="getPoster()" alt="">
@@ -101,6 +121,7 @@ export default {
 
                 <p max-length="50" class="truncate-text">{{ item.overview }}</p>
                 <div><span v-for="singleName in store.casts">{{ singleName.name }}, </span></div>
+                <div><span v-for="genre in store.genresMovie">{{ genre.genresMovie }}</span></div>
             </div>
         </div>
 </template>
@@ -148,3 +169,11 @@ export default {
 }
 
 </style>
+
+
+<!-- Prendere gli array in store, (movies and series),
+
+al click del select, fare le due chiamate api per i generi delle serie e dei film
+unire i due array e rimuovere eventuali doppioni per entrambi gli array
+confrontare i due array, se gli elementi nell'array creato dagli array movie
+  -->
