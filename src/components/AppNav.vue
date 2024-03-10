@@ -41,10 +41,12 @@ export default {
           <a class="nav-link text-white" href="#">My List</a>
         </li>
       </ul>
-      <div class="d-flex" role="search">
-      <input id="search" v-model="store.searchValue" class="form-control rounded-0" type="search" placeholder="Search Something" aria-label="Search">
+  
+  <div class="d-flex" role="search">
+      <input id="search" v-model="store.searchValue" class=" search-field form-control" type="search" placeholder="Search Something" aria-label="Search">
       <button @click="$emit('search')" class="btn rounded-0 my-search-btn">Search</button>
-    </div>
+  </div>
+
     </div>
   </div>
 </nav>
@@ -57,6 +59,7 @@ export default {
     }
 
     .my-search-btn{
+      display: none;
       background-color: #dc1a28;
       color: white;
     }
@@ -65,5 +68,38 @@ export default {
       color: #dc1a28;
     }
 
+  .search-field {
+    background-color: red;
+	background-image: url(https://wp-themes.com/wp-content/themes/twentythirteen/images/search-icon.png);
+	background-position: 5px  center;
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+  	border: none;
+    overflow: hidden;
+	  cursor: pointer;
+	  height: 40px;
+	  padding: 0 0 0 34px;
+	  position: relative;
+	  -webkit-transition: width 400ms ease, background 400ms ease;
+	  transition:         width 400ms ease, background 400ms ease;
+	  width:0px;
+   cursor: pointer;
+}
+
+.search-field:focus {
+	background-color: #FFF;
+	cursor: text;
+	outline: 0;
+	width: 250px;
+  color: black;
+}
+
+.search-field:focus .my-search-btn{
+  display: block;
+}
+
+.search-submit { 
+display:none;
+}
 
 </style>

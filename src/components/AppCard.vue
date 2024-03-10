@@ -77,6 +77,7 @@ export default {
     // methods that will extract casts names from api
     getCastsName(id){
     axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=19c45db332e486b3ce135dc6b088eb7e`).then(res => {
+    
     store.casts = res.data.cast;
     store.casts.splice(5,store.casts.length);
 
@@ -102,7 +103,26 @@ export default {
         })
     store.selectArray = selectArr;
     })
+
+
+    
+    
         },
+
+    getGenres(genreId){
+            // getGenres
+ 
+    // let variable = ""; 
+    // console.log(this.item.genre_ids)
+
+        const genre = store.apiGenres.find(genre => genre.id === genreId);
+        return genre ? genre.name : '';
+    },
+        // console.log(arrayProva)
+        // console.log(store.apiGenres)
+   
+
+
 
         toggleCard(){
             this.showOverlay = !this.showOverlay
@@ -125,7 +145,7 @@ export default {
                     <span>Language: </span>
                     <img :src="getFlag()" class="">
                 </div>
-                <p class="h-25 my-overview" max-length="50"><span>Overview: </span>{{ item.overview }}</p>
+                <p class="my-overview" max-length="50"><span>Overview: </span>{{ item.overview }}</p>
                 <div><span v-for="genre in store.genresMovie">{{ genre.genresMovie }}</span></div>
                 
                 <div>
@@ -142,6 +162,7 @@ export default {
                             <div class="pt-2 text-card-container">
                             <p class="m-0"><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
                             <p class="m-0"><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
+                            <p  class="m-0">Genres: <span v-for="genreId in item.genre_ids">  {{ getGenres(genreId) }} </span></p>
                             <div>
                                 <span>Language: </span>
                                 <img :src="getFlag()" class="">
@@ -170,9 +191,19 @@ export default {
 }
 
 .my-overview{
-    overflow-y: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
-}
+    overflow: hidden;
+
+
+    @supports (-webkit-line-clamp: 2) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: initial;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }}
 
 .my_img{
     width: 100%;

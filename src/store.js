@@ -5,11 +5,11 @@ export const store = reactive({
 
     movies: [],
 
+    series: [],
+
     searchValue: "",
 
     flag: "",
-
-    series: [],
 
     casts: [],
 
@@ -20,4 +20,6 @@ export const store = reactive({
     allGenres: [],
 
     selectArray: [],
+
+    singleIdsMovie: [],
 })
