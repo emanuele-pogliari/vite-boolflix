@@ -324,9 +324,6 @@ export default {
     .movie_desc{
       padding: 25px;
       height: 60%;
-      .text{
-        color: #cfd6e1;
-      }
     }
   }
   .blur_back{
@@ -348,7 +345,7 @@ export default {
   }
   
   .info_section{
-    background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
+    background: linear-gradient(to right, #0d0d0c 40%, transparent 100%);
   }
   
   .blur_back{
@@ -379,7 +376,4 @@ export default {
     display: inline-grid;
   }
 }
-
-
-
 </style>
