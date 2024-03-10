@@ -29,9 +29,10 @@ methods: {
 <div class="container">
 
     <div class="row">
-        <!-- <select v-model="store.archeSearch" name="genres" id="" @change="$emit('search')">
+        <select v-model="store.archeSearch" name="genres" id="" @change="$emit('search')">
         <option :value="0">---Select genre---</option>
-        </select> -->
+        <option v-for="genre in store.selectArray">{{genre}}</option>
+        </select>
         
         <div class="text-white fs-2 mb-3" v-if="store.movies.length!= 0">Movies</div>
 

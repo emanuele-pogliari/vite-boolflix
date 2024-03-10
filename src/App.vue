@@ -22,17 +22,17 @@ export default {
 
     axios.get("https://api.themoviedb.org/3/movie/popular?api_key=19c45db332e486b3ce135dc6b088eb7e").then(res => {
       this.store.movies = res.data.results;
-    });
+    }).catch(err => console.error(err));
+;
 
     axios.get("https://api.themoviedb.org/3/tv/popular?api_key=19c45db332e486b3ce135dc6b088eb7e").then(res => {
       this.store.series = res.data.results;
-    });
+    }).catch(err => console.error(err));
+;
 
-  // // call for movie genres
-  // axios('https://api.themoviedb.org/3/genre/movie/list?language=en', this.store.options)
-  //   .then(res => {
-  //   console.log(res.data.genres);
-  //   }).catch(err => console.error(err));
+    axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=19c45db332e486b3ce135dc6b088eb7e`).then(res => {
+        store.apiGenres = res.data.genres
+    }).catch(err => console.error(err));
 
   //   // call for series genres
   // axios('https://api.themoviedb.org/3/genre/tv/list?language=en', this.store.options)

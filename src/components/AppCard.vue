@@ -77,21 +77,33 @@ export default {
 
     // test for genres
     const arrUnited = [];
-    const array = store.movies.concat(store.series);
-    array.forEach(element => {
-        
+    // const array = store.movies.concat(store.series);
+    store.movies.concat(store.series).forEach(element => {
         arrUnited.push(element.genre_ids)
     });
 
-    const allGenres = [];
+
     arrUnited.forEach(element => {
         for(let i = 0; i < element.length; i++){
-            if(!allGenres.includes(element[i]))
-            allGenres.push(element[i])
+            if(!store.allGenres.includes(element[i]))
+            store.allGenres.push(element[i])
         }
     });
+
+    console.log(store.apiGenres);
+    const selectArr = [];
+    store.apiGenres.forEach(element => {
+           if(store.allGenres.includes(element.id)){
+                selectArr.push(element.name);
+           }
+        })
     
-    console.log(allGenres)
+    store.selectArray = selectArr;
+
+    console.log(selectArr)
+    
+
+    
     
         
     })
