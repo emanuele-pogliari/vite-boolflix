@@ -12,11 +12,15 @@ export default {
     data(){
         return{
             store,
+            // overlay description is disabled
             showOverlay:false,
         }
     },
 
     methods:{
+
+    // method that will check original_language value. With the switch i create some cases. If them are verified, 
+    // original language value will change and returned with the final link of the flag that will be printed on screen 
     getFlag(){
         let flag = this.item.original_language;
         switch(this.item.original_language){
@@ -52,6 +56,7 @@ export default {
         return `https://flagcdn.com/16x12/${flag}.png`
     },
 
+    // method that will load poster image on the description, if not available fallback img will be loaded
     getPoster(){
         if(this.item.poster_path != null){
         return `https://image.tmdb.org/t/p/w342/${this.item.poster_path}`
@@ -60,6 +65,7 @@ export default {
     }
     },
 
+    // method that will load backdrop image on the description, if not available fallback img will be loaded
     getBackdrop(){
         if(this.item.backdrop_path != null){
         return `https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/${this.item.backdrop_path}`
@@ -68,6 +74,7 @@ export default {
     }
     },
 
+    // method that will print 5 stars vote
     printStars(){
         const vote = Math.round(this.item.vote_average / 2);
         const arrayStars = ['fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star'];
@@ -87,6 +94,7 @@ export default {
     
     // test for genres
     const arrUnited = [];
+
     store.movies.concat(store.series).forEach(element => {
         arrUnited.push(element.genre_ids)
     });
@@ -109,11 +117,13 @@ export default {
     })
         },
 
+    // method that will get the genres id from single movie o serie and will return genre names of that show. 
     getGenres(genreId){
         const genre = store.apiGenres.find(genre => genre.id === genreId);
         return genre ? genre.name : '';
     },
    
+    // method that will activate and disable overlay description on user click.
     toggleCard(){
         this.showOverlay = !this.showOverlay
         this.getCastsName(this.item.id)
@@ -126,66 +136,85 @@ export default {
 </script>
 
 <template>
-        <div id="main-content" class="card col-12 col-md-3 col-lg-2 p-0 border-1 border-color rounded-0 my-card">
-            <div class="img-box">
-                <img class="my_img" :src="getPoster()" alt="">
+        <!-- card  -->
+    <div id="main-content" class="card col-12 col-md-3 col-lg-2 p-0 border-1 border-color rounded-0 my-card">
+        <!-- poster image -->
+        <div class="img-box">
+            <img class="my-img" :src="getPoster()" alt="">
+        </div>
+        
+        <!-- overlay poster card -->
+        <div class="poster-overlay d-flex flex-column ">
+                
+            <p><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
+                
+            <div>
+                 <span>Language: </span>
+                 <img :src="getFlag()" class="">
             </div>
-            <div class="overlay d-flex flex-column ">
-                <p><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
-                <div>
-                    <span>Language: </span>
-                    <img :src="getFlag()" class="">
-                </div>
-                <p class="my-overview" max-length="50"><span>Overview: </span>{{ item.overview }}</p>
-                <div><span v-for="genre in store.genresMovie">{{ genre.genresMovie }}</span></div>
                 
-                <div>
-                    <span>Rate: </span>
-                    <i v-for="star in printStars()" :class="star"></i>
-                </div>
-                <p @click="toggleCard" class="fs-5 my-more-btn">More...</p>
+            <p class="my-overview" max-length="50"><span>Overview: </span>{{ item.overview }}</p>
                 
-                <div v-if="showOverlay" class="overlays overflow-scroll ">
-                    <div class="card w-50 my-card">
-                        <div class="card-body text-start">
-                            <i @click="toggleCard" class="my-close-btn position-absolute fa-solid fa-xmark position-absolute top-0 end-0 me-2"></i>
-                            <img class="m-auto img-fluid" :src="getBackdrop()" alt="">
-                            <div class="pt-2 text-card-container">
+            <div>
+                <span v-for="genre in store.genresMovie">{{ genre.genresMovie }}</span>
+            </div>
+                
+            <div>
+                <span>Rate: </span>
+                <i v-for="star in printStars()" :class="star"></i>
+            </div>
+            
+            <p @click="toggleCard" class="fs-5 my-more-btn">More...</p>
+                
+                <!-- overlay description -->
+            <div v-if="showOverlay" class="desc-overlay overflow-scroll ">
+                    
+                <div class="card w-50 my-card">
+                        
+                    <div class="card-body text-start">
+                            
+                        <i @click="toggleCard" class="my-close-btn position-absolute fa-solid fa-xmark position-absolute top-0 end-0 me-2"></i>
+                        <img class="m-auto img-fluid" :src="getBackdrop()" alt="">
+                    
+                        <div class="pt-2 text-card-container">
+                    
                             <p class="m-0"><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
                             <p class="m-0"><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
                             <p  class="m-0">Genres: <span v-for="genreId in item.genre_ids">  {{ getGenres(genreId) }}, </span></p>
+                            
                             <div>
                                 <span>Language: </span>
                                 <img :src="getFlag()" class="">
                             </div>
+                            
                             <p class="m-0">Cast: <span v-for="singleName in store.casts">{{ singleName.name }},</span></p>
+                            
                             <div>
                                 <span>Rate: </span>
                                 <i v-for="star in printStars()" :class="star"></i>
                             </div>
+                            
                             <p class="m-0"><span>Overview: </span>{{ item.overview }}</p>
-                        </div>
+                        
                         </div>
                         
                     </div>
+                        
                 </div>
-
                 
             </div>
+
         </div>
+    </div>
 </template>
 
 <style lang="scss">
 
-.disable-events{
-    pointer-events: none;
-}
-
+// to truncate overview of the movie/series after 4 rows
 .my-overview{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-
 
     @supports (-webkit-line-clamp: 2) {
       overflow: hidden;
@@ -196,7 +225,8 @@ export default {
       -webkit-box-orient: vertical;
     }}
 
-.my_img{
+// 
+.my-img{
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1.5;
@@ -208,7 +238,7 @@ export default {
     max-width: 800px;
   }
 
-  .overlay {
+ .poster-overlay {
   position: absolute; 
   bottom: 0; 
   background: rgb(0, 0, 0);
@@ -222,15 +252,15 @@ export default {
   text-align: center;
 }
 
-.overlay span{
+.poster-overlay span{
     color: #dc1a28;
 }
 
-.my-card:hover .overlay {
+.my-card:hover .poster-overlay {
   opacity: 1;
 }
 
-.overlays {
+.desc-overlay {
   position: fixed;
   top: 0;
   left: 0%;

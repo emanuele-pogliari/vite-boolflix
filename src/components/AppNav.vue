@@ -68,6 +68,7 @@ export default {
       color: #dc1a28;
     }
 
+    // style seach field 
   .search-field {
     background-color: red;
 	background-image: url(https://wp-themes.com/wp-content/themes/twentythirteen/images/search-icon.png);
@@ -86,16 +87,13 @@ export default {
    cursor: pointer;
 }
 
+// when input is clicked, search field will appear 
 .search-field:focus {
 	background-color: #FFF;
 	cursor: text;
 	outline: 0;
 	width: 250px;
   color: black;
-}
-
-.search-field:focus .my-search-btn{
-  display: block;
 }
 
 .search-submit { 
