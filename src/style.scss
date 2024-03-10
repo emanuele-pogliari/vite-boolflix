@@ -1,4 +1,9 @@
+@font-face {
+    font-family: "Bebas Neue RG";
+    src: url("/public/fonts/bebasNeueRG.otf");
+}
+
 body {
-    font-family: "Bebas Neue", sans-serif;
+    font-family: "Bebas Neue RG", sans-serif;
     background-color: #1b1b1b;
 }
