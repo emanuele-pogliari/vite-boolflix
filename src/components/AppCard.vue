@@ -144,7 +144,7 @@ export default {
         </div>
         
         <!-- overlay poster card -->
-        <div class="poster-overlay d-flex flex-column ">
+        <div class="poster-overlay d-flex flex-column">
                 
             <p><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
                 
@@ -168,48 +168,43 @@ export default {
                 
                 <!-- overlay description -->
             <div v-if="showOverlay" class="desc-overlay overflow-scroll ">
-                    
-                <div class="card w-50 my-card">
-                        
-                    <div class="card-body text-start">
-                            
-                        <i @click="toggleCard" class="my-close-btn position-absolute fa-solid fa-xmark position-absolute top-0 end-0 me-2"></i>
-                        <img class="m-auto img-fluid" :src="getBackdrop()" alt="">
-                    
-                        <div class="pt-2 text-card-container">
-                    
-                            <p class="m-0"><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
-                            <p class="m-0"><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
-                            <p  class="m-0">Genres: <span v-for="genreId in item.genre_ids">  {{ getGenres(genreId) }}, </span></p>
-                            
-                            <div>
-                                <span>Language: </span>
-                                <img :src="getFlag()" class="">
-                            </div>
-                            
-                            <p class="m-0">Cast: <span v-for="singleName in store.casts">{{ singleName.name }},</span></p>
-                            
-                            <div>
-                                <span>Rate: </span>
-                                <i v-for="star in printStars()" :class="star"></i>
-                            </div>
-                            
-                            <p class="m-0"><span>Overview: </span>{{ item.overview }}</p>
-                        
-                        </div>
-                        
-                    </div>
-                        
-                </div>
                 
+                <div class="movie_card" id="card-container">
+                
+                    <div class="info_section">
+                        <i @click="toggleCard" class="my-close-btn position-absolute fa-solid fa-xmark position-absolute top-0 end-0 mt-2 me-2"></i>
+                        <div class="movie_header">
+                            <img class="poster-small" :src="getPoster()" alt=""/>
+                            <h1 class="m-0">{{ item.title ? item.title : item.name }}</h1>
+                            <p class="m-0"><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
+                            <p class="type m-1">Genres: <span v-for="genreId in item.genre_ids">  {{ getGenres(genreId) }}, </span></p>
+                        </div>
+                        <div class="movie_desc px-2 text-start ">
+                            <p class="mt-4"><span>Overview: </span>{{ item.overview }}</p>
+                            <p class="m-0">Cast: <span v-for="singleName in store.casts">{{ singleName.name }},</span></p>
+                            <div>
+                              <span>Language: </span>
+                              <img :src="getFlag()" class="">
+                            </div>
+                            <div>
+                              <span class="rate">Rate: </span>
+                              <i v-for="star in printStars()" :class="star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blur_back tomb_back">
+                        <img class="m-auto img-fluid" :src="getBackdrop()" alt="">
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </template>
-
+            
+                    
 <style lang="scss">
 
+// HOME PAGE CARD 
 // to truncate overview of the movie/series after 4 rows
 .my-overview{
     white-space: nowrap;
@@ -225,20 +220,20 @@ export default {
       -webkit-box-orient: vertical;
     }}
 
-// 
+
 .my-img{
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1.5;
   }
 
-  .my-card{
+.my-card{
     background-color: rgb(27, 25, 25);
     color:white;
     max-width: 800px;
-  }
+}
 
- .poster-overlay {
+.poster-overlay {
   position: absolute; 
   bottom: 0; 
   background: rgb(0, 0, 0);
@@ -252,13 +247,17 @@ export default {
   text-align: center;
 }
 
-.poster-overlay span{
+.poster-overlay span, .rate{
     color: #dc1a28;
 }
 
 .my-card:hover .poster-overlay {
   opacity: 1;
 }
+// END HOME PAGE CARD
+
+
+// CARD DESCRIPTION
 
 .desc-overlay {
   position: fixed;
@@ -273,8 +272,114 @@ export default {
   z-index: 3;
 }
 
+.card-container{
+  box-shadow: 0px 0px 150px -45px rgba(19, 160, 134, 0.6);
+}
+
 .my-more-btn, .my-close-btn {
     cursor: pointer;
 }
+
+.movie_card{
+  position: relative;
+  display: block;
+  width: 800px;
+  height: 500px;
+  margin: 100px auto; 
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.4s;
+
+  .info_section{
+    position: relative;
+    width: 100%;
+    height: 100%;
+	  background-blend-mode: multiply;
+    z-index: 2;
+    border-radius: 10px;
+    .movie_header{
+      position: relative;
+      padding: 25px;
+      height: 25%;
+      h1{
+        color: #fff;
+        font-weight: 400;
+      }
+      h4{
+        color: #9ac7fa;
+        font-weight: 400;
+      }
+      .type{
+        display: inline-block;
+        color: #cee4fd;
+        margin-left: 10px;
+      }
+      .poster-small{
+        position: relative;
+        float: left;
+        height: 120px;
+        box-shadow: 0 0 20px -10px rgba(0,0,0,0.5);
+      }
+    }
+    .movie_desc{
+      padding: 25px;
+      height: 60%;
+      .text{
+        color: #cfd6e1;
+      }
+    }
+  }
+  .blur_back{
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 100%; right: 0;
+    border-radius: 11px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .movie_header{
+    width: 60%;
+  }
+  
+  .movie_desc{
+    width: 50%;
+  }
+  
+  .info_section{
+    background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
+  }
+  
+  .blur_back{
+    width: 100%;
+    background-position: -100% 10% !important;  
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .movie_card{
+    width: 95%;
+    margin: 70px auto; 
+    min-height: 350px;
+    height: auto;
+  }
+
+  .movie_header{
+    width: 100%;
+    margin-top: 85px;
+  }
+  
+  .movie_desc{
+    width: 100%;
+  }
+  
+  .info_section{
+    background: linear-gradient(to top, rgb(64, 64, 58) 50%, transparent 100%);
+    display: inline-grid;
+  }
+}
+
+
 
 </style>
