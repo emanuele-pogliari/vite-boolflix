@@ -12,6 +12,7 @@ export default {
     data(){
         return{
             store,
+            showOverlay:false,
         }
     },
 
@@ -59,6 +60,10 @@ export default {
     }
     },
 
+    getBackdrop(){
+        return `https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/${this.item.backdrop_path}`
+    },
+
     printStars(){
         const vote = Math.round(this.item.vote_average / 2);
         const arrayStars = ['fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star', 'fa-regular fa-star'];
@@ -77,7 +82,6 @@ export default {
 
     // test for genres
     const arrUnited = [];
-    // const array = store.movies.concat(store.series);
     store.movies.concat(store.series).forEach(element => {
         arrUnited.push(element.genre_ids)
     });
@@ -90,62 +94,85 @@ export default {
         }
     });
 
-    console.log(store.apiGenres);
     const selectArr = [];
     store.apiGenres.forEach(element => {
            if(store.allGenres.includes(element.id)){
                 selectArr.push(element.name);
            }
         })
-    
     store.selectArray = selectArr;
-
-    console.log(selectArr)
-    
-
-    
-    
-        
     })
         },
-    }   
+
+        toggleCard(){
+            this.showOverlay = !this.showOverlay
+            this.getCastsName(this.item.id)
+        }
 }
+    }   
+
 
 </script>
 
 <template>
-    
-        <div @click=getCastsName(item.id) class="card col-12 col-md-3 col-lg-2 p-0 flip-card border-1 border-color rounded-0 position-relative my-card">
+        <div id="main-content" class="card col-12 col-md-3 col-lg-2 p-0 border-1 border-color rounded-0 my-card">
             <div class="img-box">
                 <img class="my_img" :src="getPoster()" alt="">
             </div>
-            <div class="overlay">
+            <div class="overlay d-flex flex-column ">
                 <p><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
-                <p><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
                 <div>
                     <span>Language: </span>
                     <img :src="getFlag()" class="">
                 </div>
+                <p class="h-25 my-overview" max-length="50"><span>Overview: </span>{{ item.overview }}</p>
+                <div><span v-for="genre in store.genresMovie">{{ genre.genresMovie }}</span></div>
+                
                 <div>
                     <span>Rate: </span>
                     <i v-for="star in printStars()" :class="star"></i>
                 </div>
+                <p @click="toggleCard" class="fs-5 my-more-btn">More...</p>
+                
+                <div v-if="showOverlay" class="overlays overflow-scroll ">
+                    <div class="card w-50 my-card">
+                        <div class="card-body text-start">
+                            <i @click="toggleCard" class="my-close-btn position-absolute fa-solid fa-xmark position-absolute top-0 end-0 me-2"></i>
+                            <img class="m-auto img-fluid" :src="getBackdrop()" alt="">
+                            <div class="pt-2 text-card-container">
+                            <p class="m-0"><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
+                            <p class="m-0"><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
+                            <div>
+                                <span>Language: </span>
+                                <img :src="getFlag()" class="">
+                            </div>
+                            <p class="m-0">Cast: <span v-for="singleName in store.casts">{{ singleName.name }},</span></p>
+                            <div>
+                                <span>Rate: </span>
+                                <i v-for="star in printStars()" :class="star"></i>
+                            </div>
+                            <p class="m-0"><span>Overview: </span>{{ item.overview }}</p>
+                        </div>
+                        </div>
+                        
+                    </div>
+                </div>
 
-                <p max-length="50" class="truncate-text">{{ item.overview }}</p>
-                <div><span v-for="singleName in store.casts">{{ singleName.name }}, </span></div>
-                <div><span v-for="genre in store.genresMovie">{{ genre.genresMovie }}</span></div>
+                
             </div>
         </div>
 </template>
 
 <style lang="scss">
 
-.truncate-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.disable-events{
+    pointer-events: none;
 }
 
+.my-overview{
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+}
 
 .my_img{
     width: 100%;
@@ -154,8 +181,9 @@ export default {
   }
 
   .my-card{
-    background-color: transparent;
+    background-color: rgb(27, 25, 25);
     color:white;
+    max-width: 800px;
   }
 
   .overlay {
@@ -178,6 +206,23 @@ export default {
 
 .my-card:hover .overlay {
   opacity: 1;
+}
+
+.overlays {
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.my-more-btn, .my-close-btn {
+    cursor: pointer;
 }
 
 </style>

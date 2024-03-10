@@ -14,7 +14,7 @@ export default {
 </script>
 
 <template>   
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg text-capitalize ">
   <div class="container-fluid">
     <a class="navbar-brand text-white"><img class="img-fluid my-logo" src="/img/logo-bool.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
