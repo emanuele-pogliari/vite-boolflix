@@ -61,7 +61,11 @@ export default {
     },
 
     getBackdrop(){
+        if(this.item.backdrop_path != null){
         return `https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/${this.item.backdrop_path}`
+        }else{
+        return `/img/fallback-backdrop.png`
+    }
     },
 
     printStars(){
@@ -80,7 +84,7 @@ export default {
     
     store.casts = res.data.cast;
     store.casts.splice(5,store.casts.length);
-
+    
     // test for genres
     const arrUnited = [];
     store.movies.concat(store.series).forEach(element => {
@@ -103,31 +107,18 @@ export default {
         })
     store.selectArray = selectArr;
     })
-
-
-    
-    
         },
 
     getGenres(genreId){
-            // getGenres
- 
-    // let variable = ""; 
-    // console.log(this.item.genre_ids)
-
         const genre = store.apiGenres.find(genre => genre.id === genreId);
         return genre ? genre.name : '';
     },
-        // console.log(arrayProva)
-        // console.log(store.apiGenres)
    
-
-
-
-        toggleCard(){
-            this.showOverlay = !this.showOverlay
-            this.getCastsName(this.item.id)
-        }
+    toggleCard(){
+        this.showOverlay = !this.showOverlay
+        this.getCastsName(this.item.id)
+        store.casts = [];
+    }
 }
     }   
 
@@ -162,7 +153,7 @@ export default {
                             <div class="pt-2 text-card-container">
                             <p class="m-0"><span>Title: </span>{{ item.title ? item.title : item.name }}</p>
                             <p class="m-0"><span>Original Title: </span>{{ item.original_title ? item.original_title : item.original_name }}</p>
-                            <p  class="m-0">Genres: <span v-for="genreId in item.genre_ids">  {{ getGenres(genreId) }} </span></p>
+                            <p  class="m-0">Genres: <span v-for="genreId in item.genre_ids">  {{ getGenres(genreId) }}, </span></p>
                             <div>
                                 <span>Language: </span>
                                 <img :src="getFlag()" class="">
@@ -257,11 +248,3 @@ export default {
 }
 
 </style>
-
-
-<!-- Prendere gli array in store, (movies and series),
-
-al click del select, fare le due chiamate api per i generi delle serie e dei film
-unire i due array e rimuovere eventuali doppioni per entrambi gli array
-confrontare i due array, se gli elementi nell'array creato dagli array movie
-  -->

@@ -1,13 +1,18 @@
 <script>
 import AppCard from "./AppCard.vue";
-
+import AppSelect from "./AppSelect.vue";
 import {store} from "../store.js"
 
 export default{
     name: 'AppMain',
 
+    props: {
+        item: Object,
+    },
+
     components:{
         AppCard,
+        AppSelect,
     },
 
     data() {
@@ -19,9 +24,10 @@ export default{
 
 
 methods: {
-    filterMovies(){
+//     filterMovies(){
+//         if()
 
-}
+// }
 },
 }
 </script>
@@ -29,12 +35,8 @@ methods: {
 <template>    
 
 <div class="container">
-
+    <!-- <AppSelect @search="filterMovies()"></AppSelect> -->
     <div class="row">
-        <select class="w-25" v-model="store.genreSearch" name="genres" id="">
-        <option :value="0">---Select genre---</option>
-        <option v-for="genre in store.selectArray">{{genre}}</option>
-        </select>
         
         <div class="text-white p-0 fs-2 my-3" v-if="store.movies.length!= 0">Movies</div>
 
